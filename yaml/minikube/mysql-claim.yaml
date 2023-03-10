@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolumeClaim #PersistentVolumeClaim kind
+metadata:
+  name: mysql-claim #claim’s name
+spec:
+  accessModes:
+    - ReadWriteOnce #only read-write in a single node
+  volumeMode: Filesystem #a file system should be mounted
+  resources:
+    requests:
+      storage: 5Gi #need 8 GBs of storage
+  selector:
+    matchLabels: #select only persistent volumes for stable releases in dev environments
+      app: mysql

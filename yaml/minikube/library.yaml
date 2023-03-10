@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: library #Deployment name
+  labels:
+    app: library #label to find the respective pods to manage
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: library
+  template: #template for the replica/pod specification
+    metadata:
+      labels:
+        app: library #label for the corresponding app
+    spec: 
+      containers:
+      - name: library #container name
+        image: kkritikos/library:latest #container image
+        ports:
+        - containerPort: 30000 #container port
+        env: #get environment vars from specific secret
+         - name: DB_USER
+           valueFrom:
+             secretKeyRef:
+               name: user-secret
+               key: username
+         - name: DB_PWD
+           valueFrom:
+             secretKeyRef:
+               name: user-secret
+               key: password
+         - name: JAVA_OPTS #pass previous environment vars as system properties to tomcat
+           value: "-DDB_USER=$(DB_USER) -DDB_PWD=$(DB_PWD)"
+        volumeMounts:
+            - name: tomcat-config-vol
+              mountPath: "/usr/local/tomcat/conf/"
+              readOnly: true
+        resources:
+            requests:
+                memory: "512Mi"
+                cpu: "100m"
+            limits:
+                memory: "1024Mi"
+                cpu: "2000m"
+      volumes:
+        - name: tomcat-config-vol
+          secret:
+            secretName: tomcat-secret

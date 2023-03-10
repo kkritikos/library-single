@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mysql-ss
+  labels:
+    app: mysql #label to find the respective pods to manage
+spec:
+  serviceName: "mysql"
+  replicas: 1 #create 1 replicas
+  selector:
+    matchLabels:
+      app: mysql #select mysql app
+  template: #template for the replica/pod specification
+    metadata:
+      labels:
+        app: mysql #label for the corresponding app
+    spec: #replica spec part
+      containers:
+        - name: mysql #container name
+          image: mysql #container image
+          env:
+           - name: MYSQL_ROOT_PASSWORD
+             valueFrom:
+               secretKeyRef:
+                 name: db-secret
+                 key: password
+          ports:
+            - containerPort: 3306 #container port
+          volumeMounts: #mounting of a volume
+            - name: mysql-vol
+              mountPath: /var/lib/mysql
+            - name: init
+              mountPath: /docker-entrypoint-initdb.d
+          resources:
+            requests:
+              memory: "2048Mi"
+              cpu: "1000m"
+            limits:
+              memory: "4096Mi"
+              cpu: "2000m"
+      volumes:
+        - name: mysql-vol
+          persistentVolumeClaim:
+            claimName: mysql-claim 
+        - name: init
+          secret:
+            secretName: sql-secret

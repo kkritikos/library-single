@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service #Service kind
+metadata:
+  name: mysql #Service name
+spec:
+  clusterIP: None
+  selector: #pod selector
+    app: mysql
+  ports: #ports to be exploited
+    - protocol: TCP
+      port: 3306 
+      name: mysql

@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service #Service kind
+metadata:
+  name: library-service #Service name
+spec:
+  selector: #pod selector
+    app: library
+  ports: #ports to be exploited
+    - protocol: TCP
+      port: 8080 #port the LB is listening to
+      targetPort: 30000 #port in nodes where traffic is redirected by LB
+  type: LoadBalancer

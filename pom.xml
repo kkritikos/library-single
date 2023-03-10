@@ -1,0 +1,158 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                      http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>gr.aegean</groupId>
+  <artifactId>library-single</artifactId>
+  <version>0.1</version>
+  <packaging>war</packaging>
+  
+  <properties>  
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <!-- plugin versions -->
+    <maven-compiler.version>3.8.1</maven-compiler.version>
+    <plugin.war.version>3.2.3</plugin.war.version>
+    <!-- Dependencies versions -->
+	<jersey.version>2.34</jersey.version>
+	<cglib.version>2.2.2</cglib.version>
+	<jsr250.version>1.0</jsr250.version>
+	<inject.version>1</inject.version>
+	<mysql.version>8.0.24</mysql.version>
+	<commons-IO.version>2.5</commons-IO.version>
+	<xml-bind.version>2.3.1</xml-bind.version>
+	<jaxb-core.version>2.3.0.1</jaxb-core.version>
+	<javaassist.version>3.25.0-GA</javaassist.version>
+	<jaxws-api.version>2.3.1</jaxws-api.version>
+	<surefire.version>2.22.2</surefire.version>
+  </properties>
+  
+  <build>
+    <sourceDirectory>src/main/java</sourceDirectory>
+	<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+        		<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+				<warName>library-rest</warName>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+  
+  <dependencies>
+	  <dependency>
+    	<groupId>commons-io</groupId>
+    	<artifactId>commons-io</artifactId>
+    	<version>${commons-IO.version}</version>
+	  </dependency>
+	  
+	  <!-- Jersey Dependencies -->
+	  <dependency>
+		<groupId>org.glassfish.jersey.core</groupId>
+		<artifactId>jersey-server</artifactId>
+		<version>${jersey.version}</version>
+	  </dependency>
+	  <dependency>
+    	<groupId>org.glassfish.jersey.containers</groupId>
+    	<artifactId>jersey-container-servlet-core</artifactId>
+    	<version>${jersey.version}</version>
+	  </dependency>
+	  <dependency>
+    	<groupId>org.glassfish.jersey.inject</groupId>
+    	<artifactId>jersey-hk2</artifactId>
+    	<version>${jersey.version}</version>
+	  </dependency>
+	  <dependency>
+    	<groupId>org.glassfish.jersey.media</groupId>
+    	<artifactId>jersey-media-moxy</artifactId>
+    	<version>${jersey.version}</version>
+	  </dependency>
+	  <dependency>
+	    <groupId>org.glassfish.jersey.media</groupId>
+	    <artifactId>jersey-media-jaxb</artifactId>
+	    <version>${jersey.version}</version>
+	  </dependency>
+	    
+	  <!-- JAXB Dependencies -->  
+	  <dependency>
+    	<groupId>com.sun.xml.bind</groupId>
+    	<artifactId>jaxb-core</artifactId>
+    	<version>${jaxb-core.version}</version>
+	  </dependency>
+	  <dependency>
+		<groupId>javax.xml.bind</groupId>
+		<artifactId>jaxb-api</artifactId>
+		<version>${xml-bind.version}</version>
+	  </dependency>
+	  <dependency>
+		<groupId>com.sun.xml.bind</groupId>
+		<artifactId>jaxb-impl</artifactId>
+		<version>${xml-bind.version}</version>
+	  </dependency>
+	  <dependency>
+		<groupId>org.javassist</groupId>
+		<artifactId>javassist</artifactId>
+		<version>${javaassist.version}</version>
+	  </dependency>
+	  <dependency>
+		<groupId>cglib</groupId>
+		<artifactId>cglib-nodep</artifactId>
+		<version>${cglib.version}</version>
+	  </dependency>
+
+	  <!-- Annotation & JAXWS-API Dependencies -->
+      <dependency>
+		<groupId>javax.annotation</groupId>
+		<artifactId>jsr250-api</artifactId>
+		<version>${jsr250.version}</version>
+	  </dependency>
+      <dependency>
+      	<groupId>javax.inject</groupId>
+      	<artifactId>javax.inject</artifactId>
+      	<version>${inject.version}</version>
+      </dependency>
+	  <dependency>
+	    <groupId>javax.xml.ws</groupId>
+	    <artifactId>jaxws-api</artifactId>
+	    <version>${jaxws-api.version}</version>
+	  </dependency>
+	
+	<!-- DB Dependencies -->
+	<dependency>
+	    <groupId>mysql</groupId>
+	    <artifactId>mysql-connector-java</artifactId>
+	    <version>${mysql.version}</version>
+	</dependency>
+  </dependencies>
+  
+  <pluginRepositories>
+        <pluginRepository>
+            <id>central</id>
+            <name>Central Repository</name>
+            <url>https://repo.maven.apache.org/maven2</url>
+            <layout>default</layout>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <releases>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+        </pluginRepository>
+    </pluginRepositories>
+    <repositories>
+        <repository>
+            <id>central</id>
+            <name>Central Repository</name>
+            <url>https://repo.maven.apache.org/maven2</url>
+            <layout>default</layout>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+</project>
