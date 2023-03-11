@@ -5,9 +5,9 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8080:8080"
+      - "30000:30000"
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/library-rest"]
+      test: ["CMD", "curl", "-f", "http://localhost:30000"]
       interval: 1m30s
       timeout: 10s
       retries: 3
@@ -30,9 +30,6 @@ services:
     depends_on: 
       mysql: 
         condition: service_healthy
-    configs:
-      - source: tomcat_config
-        target: /usr/local/tomcat/conf/tomcat-users.xml
                 
   mysql:
     image: "mysql:latest"
@@ -66,6 +63,3 @@ networks:
   library-net: {}
 volumes:
   mysql: {}
-configs:
-  tomcat_config:
-    file: ./tomcat/tomcat-users.xml

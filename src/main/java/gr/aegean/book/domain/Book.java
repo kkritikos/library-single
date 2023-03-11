@@ -2,13 +2,9 @@ package gr.aegean.book.domain;
 
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlRootElement;
-
 /**
  * @author Kyriakos Kritikos
  */
-
-@XmlRootElement
 public class Book {
 
 	private String isbn = null;

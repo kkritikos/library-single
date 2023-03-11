@@ -16,7 +16,7 @@ spec:
     spec: 
       containers:
       - name: library #container name
-        image: kkritikos/library:latest #container image
+        image: kkritikos/library:single #container image
         ports:
         - containerPort: 30000 #container port
         env: #get environment vars from specific secret
@@ -30,12 +30,6 @@ spec:
              secretKeyRef:
                name: user-secret
                key: password
-         - name: JAVA_OPTS #pass previous environment vars as system properties to tomcat
-           value: "-DDB_USER=$(DB_USER) -DDB_PWD=$(DB_PWD)"
-        volumeMounts:
-            - name: tomcat-config-vol
-              mountPath: "/usr/local/tomcat/conf/"
-              readOnly: true
         resources:
             requests:
                 memory: "512Mi"
@@ -43,7 +37,3 @@ spec:
             limits:
                 memory: "1024Mi"
                 cpu: "2000m"
-      volumes:
-        - name: tomcat-config-vol
-          secret:
-            secretName: tomcat-secret

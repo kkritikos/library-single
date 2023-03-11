@@ -8,16 +8,15 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.ws.rs.InternalServerErrorException;
-
 import gr.aegean.book.configuration.PropertyReader;
 import gr.aegean.book.domain.Book;
+import gr.aegean.book.exception.InternalServerErrorException;
 
 public final class DBHandler {
 	
 	private DBHandler() {}
 	
-	private static Connection getConnection() throws InternalServerErrorException {
+	private static Connection getConnection() throws InternalServerErrorException{
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection con = DriverManager.getConnection(  
@@ -25,7 +24,7 @@ public final class DBHandler {
 			return con;
 		}
 		catch(Exception e) {
-			throw new InternalServerErrorException("Cannot connect to underlying database");
+			throw new InternalServerErrorException("Cannot connect to underlying database: " + PropertyReader.getLogin());
 		}
 	}
 	
@@ -157,6 +156,25 @@ public final class DBHandler {
 			throw new InternalServerErrorException("An internal error prevented from getting the information of the library's books");
 		}
 		return hasBook;
+	}
+	
+	public static boolean existsUser(String username, String password) throws InternalServerErrorException {
+		boolean hasUser = false;
+		Connection con = getConnection();
+		try {
+			Statement stmt = con.createStatement();
+			String query = "select * from `user` where login='" + username + "' and password='" + password + "'";
+			ResultSet rs = stmt.executeQuery(query);
+			if (rs.next()) {
+				hasUser = true;
+			}
+			
+			con.close();
+		}
+		catch(Exception e) {
+			throw new InternalServerErrorException("An internal error prevented from authenticating user");
+		}
+		return hasUser;
 	}
 	
 	public static boolean updateBook(Book book) throws InternalServerErrorException{

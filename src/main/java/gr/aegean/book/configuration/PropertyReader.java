@@ -50,15 +50,13 @@ public final class PropertyReader {
 		}
 		try {
 			String altDbHost = System.getenv("DB_HOST");
-			if (altDbHost != null && !altDbHost.equals("")) dbHost = altDbHost; 
+			if (altDbHost != null && !altDbHost.equals("")) dbHost = altDbHost;
+			String loginVar = System.getenv("DB_USER");
+			if (loginVar != null && !loginVar.equals("")) login = loginVar;
+			String pwdVar = System.getenv("DB_PWD");
+			if (pwdVar != null && !pwdVar.equals("")) pwd = pwdVar;
 		}
 		catch(Exception e) {}
-		
-		String loginVar = System.getProperty("DB_USER");
-		if (loginVar != null) login = loginVar;
-		
-		String pwdVar = System.getProperty("DB_PWD");
-		if (pwdVar != null) pwd = pwdVar;
 	}
 	
 	public static String getDbName() {
