@@ -24,7 +24,7 @@ public final class DBHandler {
 			return con;
 		}
 		catch(Exception e) {
-			throw new InternalServerErrorException("Cannot connect to underlying database: " + PropertyReader.getLogin());
+			throw new InternalServerErrorException("Cannot connect to underlying database");
 		}
 	}
 	
